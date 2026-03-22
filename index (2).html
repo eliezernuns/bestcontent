@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Central de Ajuda BestContent — guias passo a passo para resolver suas dúvidas rapidamente.">
+<title>Central de Ajuda | BestContent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdn.prod.website-files.com/666d992498aab4c4a64b78a2/66f47a0cfa2708f1ba9ac682_logo%20oficial.png" rel="shortcut icon" type="image/x-icon"/>
+<style>
+:root {
+  --bg-deep:      #020617;
+  --bg-card:      rgba(15, 23, 42, 0.7);
+  --border:       rgba(100, 130, 255, 0.12);
+  --border-hover: rgba(139, 92, 246, 0.45);
+  --text-main:    #f1f5f9;
+  --text-sub:     #94a3b8;
+  --text-muted:   #64748b;
+  --accent:       #8b5cf6;
+  --grad-cta:     linear-gradient(90deg, #ec4899 0%, #f97316 100%);
+  --grad-purple:  linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  --nav-height:   80px;
+  --radius:       16px;
+  --font-body:    'Inter', sans-serif;
+  --font-display: 'Montserrat', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg-deep); color: var(--text-main); min-height: 100vh; line-height: 1.6; overflow-x: hidden; }
+
+/* BG */
+#bc-bg { position: fixed; inset: 0; z-index: 0; background: var(--bg-deep); pointer-events: none; overflow: hidden; }
+.bc-blob { position: absolute; border-radius: 50%; filter: blur(90px); mix-blend-mode: screen; animation: bcFloat 22s infinite alternate cubic-bezier(.4,0,.2,1); }
+.blob-1 { width:55%; padding-bottom:55%; top:-10%; left:-10%; background: radial-gradient(circle,#8b5cf6 0%,transparent 70%); opacity:.55; }
+.blob-2 { width:45%; padding-bottom:45%; top:25%; right:-10%; background: radial-gradient(circle,#ec4899 0%,transparent 70%); opacity:.45; animation-delay:-7s; }
+.blob-3 { width:65%; padding-bottom:45%; bottom:-20%; left:15%; background: radial-gradient(circle,#7c3aed 0%,transparent 60%); opacity:.3; animation-delay:-14s; }
+@keyframes bcFloat { 0%{transform:translate(0,0) scale(1);} 100%{transform:translate(-18px,22px) scale(.94);} }
+.bc-noise { position:absolute; inset:0; opacity:.04; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.bc-vignette { position:absolute; inset:0; background:radial-gradient(circle at 50% 40%,transparent 20%,#020617 85%); }
+#bc-canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.7; }
+
+/* NAVBAR */
+.bc-navbar { position:fixed; top:0; left:0; width:100%; height:var(--nav-height); background:rgba(10,25,80,.6); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border); z-index:9999; display:flex; align-items:center; }
+.bc-nav-inner { max-width:1200px; width:100%; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; }
+.bc-nav-logo img { height:30px; width:auto; display:block; filter: brightness(0) invert(1); }
+.bc-nav-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.1rem; color:white; text-decoration:none; }
+.bc-nav-links { display:flex; align-items:center; gap:6px; }
+.bc-nav-link { font-size:.9rem; font-weight:500; color:var(--text-sub); padding:8px 14px; border-radius:99px; border:1px solid transparent; text-decoration:none; transition:all .25s; }
+.bc-nav-link:hover { color:white; background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.1); }
+.bc-nav-link.active { color:white; background:rgba(139,92,246,.18); border-color:rgba(139,92,246,.3); }
+.bc-nav-cta { padding:10px 22px; border-radius:99px; background:var(--grad-cta); color:white; font-size:.88rem; font-weight:700; text-decoration:none; transition:opacity .2s,transform .2s; box-shadow:0 0 20px rgba(236,72,153,.35); }
+.bc-nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+/* PAGE */
+.page-wrap { position:relative; z-index:1; padding-top:var(--nav-height); }
+
+/* HERO */
+.hero { text-align:center; padding:80px 24px 90px; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.3); border-radius:99px; padding:6px 16px; font-size:.78rem; font-weight:600; color:#a78bfa; letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+.hero-badge span { width:6px; height:6px; background:#a78bfa; border-radius:50%; display:block; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+.hero h1 { font-family:var(--font-display); font-size:clamp(2rem,5vw,3.4rem); font-weight:800; line-height:1.15; letter-spacing:-.02em; margin-bottom:14px; background:linear-gradient(135deg,#fff 40%,#a78bfa 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero p { font-size:1.05rem; color:var(--text-sub); max-width:480px; margin:0 auto 36px; }
+.search-wrap { max-width:560px; margin:0 auto; position:relative; }
+.search-wrap input { width:100%; padding:16px 22px 16px 54px; background:rgba(15,23,42,.8); border:1px solid var(--border); border-radius:99px; font-size:.97rem; font-family:var(--font-body); color:var(--text-main); outline:none; backdrop-filter:blur(8px); transition:border-color .25s,box-shadow .25s; }
+.search-wrap input:focus { border-color:rgba(139,92,246,.5); box-shadow:0 0 0 3px rgba(139,92,246,.12),0 8px 30px rgba(0,0,0,.3); }
+.search-wrap input::placeholder { color:var(--text-muted); }
+.search-ico { position:absolute; left:20px; top:50%; transform:translateY(-50%); color:var(--accent); pointer-events:none; font-size:1.1rem; }
+.stats-bar { display:flex; align-items:center; justify-content:center; gap:32px; flex-wrap:wrap; margin-top:40px; padding-top:32px; border-top:1px solid var(--border); max-width:580px; margin-left:auto; margin-right:auto; }
+.stat-num { font-family:var(--font-display); font-size:1.3rem; font-weight:800; background:var(--grad-cta); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat-label { font-size:.73rem; color:var(--text-muted); margin-top:2px; }
+
+/* MAIN */
+main { max-width:840px; margin:0 auto 80px; padding:0 20px; position:relative; z-index:1; }
+.tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
+.tab { padding:9px 20px; border-radius:99px; border:1px solid var(--border); background:rgba(15,23,42,.5); backdrop-filter:blur(6px); font-size:.85rem; font-weight:600; color:var(--text-sub); cursor:pointer; transition:all .2s; font-family:var(--font-body); }
+.tab:hover { border-color:rgba(139,92,246,.35); color:#c4b5fd; background:rgba(139,92,246,.08); }
+.tab.active { background:rgba(139,92,246,.18); border-color:rgba(139,92,246,.45); color:#c4b5fd; }
+
+/* FAQ */
+.faq-list { display:flex; flex-direction:column; gap:12px; }
+.faq-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; backdrop-filter:blur(12px); transition:border-color .25s,box-shadow .25s,transform .25s; }
+.faq-item:hover { border-color:rgba(139,92,246,.3); box-shadow:0 8px 40px rgba(139,92,246,.1); transform:translateY(-2px); }
+.faq-item.open { border-color:rgba(139,92,246,.5); box-shadow:0 0 0 1px rgba(139,92,246,.15),0 12px 40px rgba(139,92,246,.15); }
+.faq-question { display:flex; align-items:center; gap:14px; padding:20px 24px; cursor:pointer; user-select:none; }
+.faq-icon-wrap { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.04); }
+.faq-title { flex:1; font-size:.97rem; font-weight:600; color:var(--text-main); line-height:1.4; }
+.faq-badge { font-size:.68rem; font-weight:700; padding:4px 10px; border-radius:99px; white-space:nowrap; letter-spacing:.04em; }
+.badge-red    { background:rgba(239,68,68,.12);  border:1px solid rgba(239,68,68,.25);  color:#fca5a5; }
+.badge-purple { background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.25); color:#c4b5fd; }
+.badge-green  { background:rgba(34,197,94,.1);   border:1px solid rgba(34,197,94,.2);   color:#86efac; }
+.chevron { width:20px; height:20px; color:var(--text-muted); flex-shrink:0; transition:transform .3s,color .3s; }
+.faq-item.open .chevron { transform:rotate(180deg); color:#a78bfa; }
+.faq-answer { max-height:0; overflow:hidden; opacity:0; transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s; }
+.faq-item.open .faq-answer { max-height:1200px; opacity:1; }
+.faq-answer-inner { padding:20px 24px 28px 80px; border-top:1px solid var(--border); }
+.faq-answer-inner > p { color:var(--text-sub); font-size:.92rem; margin-bottom:20px; line-height:1.7; }
+.steps { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+.step { display:flex; align-items:flex-start; gap:14px; padding:14px 16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-left:3px solid var(--accent); border-radius:10px; transition:background .2s,border-left-color .2s; }
+.step:hover { background:rgba(139,92,246,.07); border-left-color:#c4b5fd; }
+.step-num { min-width:26px; height:26px; border-radius:50%; background:var(--grad-purple); color:white; font-weight:700; font-size:.72rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.step-text { font-size:.91rem; color:var(--text-sub); line-height:1.55; }
+.step-text strong { color:var(--text-main); }
+.tip { display:flex; gap:10px; align-items:flex-start; padding:12px 16px; border-radius:10px; font-size:.87rem; line-height:1.55; }
+.tip-warn { background:rgba(251,146,60,.08); border:1px solid rgba(251,146,60,.2); color:#fdba74; }
+.tip-ok   { background:rgba(34,197,94,.07);  border:1px solid rgba(34,197,94,.2);  color:#86efac; }
+.tip-info { background:rgba(139,92,246,.08); border:1px solid rgba(139,92,246,.2); color:#c4b5fd; }
+.tip span { font-size:1rem; flex-shrink:0; margin-top:1px; }
+
+/* NO RESULTS */
+.no-results { text-align:center; padding:60px 20px; color:var(--text-muted); display:none; }
+.no-results .nr-icon { font-size:3rem; margin-bottom:12px; }
+.no-results p { font-size:.95rem; line-height:1.6; }
+.no-results a { color:#a78bfa; text-decoration:none; font-weight:600; }
+.no-results a:hover { text-decoration:underline; }
+
+/* CONTACT BANNER */
+.contact-banner { margin-top:40px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:32px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; backdrop-filter:blur(12px); position:relative; overflow:hidden; }
+.contact-banner::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--grad-cta); }
+.contact-banner-text h3 { font-family:var(--font-display); font-size:1.1rem; font-weight:700; margin-bottom:6px; }
+.contact-banner-text p { font-size:.88rem; color:var(--text-sub); }
+.contact-buttons { display:flex; gap:12px; flex-wrap:wrap; }
+.btn { padding:12px 22px; border-radius:99px; font-size:.88rem; font-weight:700; font-family:var(--font-body); cursor:pointer; border:none; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; letter-spacing:.01em; }
+.btn-outline { background:rgba(255,255,255,.05); color:var(--text-sub); border:1px solid var(--border); }
+.btn-outline:hover { border-color:rgba(139,92,246,.4); color:#c4b5fd; background:rgba(139,92,246,.08); }
+.btn-whatsapp { background:#25D366; color:white; box-shadow:0 0 20px rgba(37,211,102,.3); }
+.btn-whatsapp:hover { background:#1ebe5d; transform:translateY(-2px); box-shadow:0 4px 20px rgba(37,211,102,.4); }
+
+/* FOOTER */
+#bc-footer-root { background:rgba(5,8,25,.97); border-top:1px solid rgba(100,130,255,.1); padding:80px 24px; position:relative; z-index:1; }
+.bcf-container { max-width:1200px; margin:0 auto; }
+.bcf-glow-spot { position:absolute; top:0; left:50%; transform:translateX(-50%); width:60%; height:1px; background:linear-gradient(90deg,transparent,rgba(139,92,246,.5),transparent); }
+.bcf-top-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:80px; margin-bottom:60px; }
+.bcf-brand-col { display:flex; flex-direction:column; gap:28px; }
+.bcf-logo-img { height:34px; width:auto; filter: brightness(0) invert(1); }
+.bcf-logo-text { font-family:var(--font-display); font-weight:800; font-size:1.3rem; color:white; text-decoration:none; }
+.bcf-desc-text { font-size:.95rem; color:#94a3b8; line-height:1.65; max-width:320px; }
+.bcf-socials-wrapper { display:flex; gap:10px; }
+.bcf-social-item { width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(100,130,255,.1); color:#94a3b8; transition:all .3s; text-decoration:none; }
+.bcf-social-item svg { width:18px; height:18px; fill:currentColor; }
+.bcf-social-item:hover { background:rgba(139,92,246,.15); border-color:#8b5cf6; color:white; transform:translateY(-4px); box-shadow:0 8px 20px -4px rgba(139,92,246,.3); }
+.bcf-nav-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:48px; }
+.bcf-nav-group { display:flex; flex-direction:column; gap:20px; }
+.bcf-nav-header { font-family:var(--font-display); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:white; opacity:.85; }
+.bcf-nav-ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; }
+.bcf-nav-item { font-size:.92rem; color:#94a3b8; text-decoration:none; transition:all .2s; display:inline-flex; align-items:center; gap:8px; position:relative; }
+.bcf-nav-item:hover { color:white; transform:translateX(5px); }
+.bcf-nav-item::before { content:''; position:absolute; left:-10px; top:50%; transform:translateY(-50%); width:4px; height:4px; background:#8b5cf6; border-radius:50%; opacity:0; transition:opacity .2s; }
+.bcf-nav-item:hover::before { opacity:1; }
+.bcf-bottom-bar { padding-top:28px; border-top:1px solid rgba(100,130,255,.1); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+.bcf-legal-block { display:flex; flex-direction:column; gap:6px; }
+.bcf-copyright { font-size:.85rem; color:#64748b; }
+.bcf-cnpj { font-size:.75rem; color:#64748b; opacity:.65; font-family:monospace; }
+.bcf-utility-wrap { display:flex; align-items:center; gap:28px; }
+.bcf-legal-links { display:flex; gap:20px; }
+.bcf-legal-link { font-size:.85rem; color:#64748b; text-decoration:none; transition:.2s; }
+.bcf-legal-link:hover { color:white; text-decoration:underline; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .bc-nav-links{display:none;}
+  .faq-answer-inner{padding:18px 16px 22px;}
+  .contact-banner{flex-direction:column; align-items:flex-start; padding:24px 20px;}
+  .bcf-top-grid{grid-template-columns:1fr; gap:48px;}
+  .bcf-bottom-bar{flex-direction:column-reverse; align-items:flex-start;}
+  .stats-bar{gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div id="bc-bg">
+  <div class="bc-blob blob-1"></div>
+  <div class="bc-blob blob-2"></div>
+  <div class="bc-blob blob-3"></div>
+  <div class="bc-noise"></div>
+  <canvas id="bc-canvas"></canvas>
+  <div class="bc-vignette"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="bc-navbar">
+  <div class="bc-nav-inner">
+    <a href="https://bestcontent.ai" style="text-decoration:none;display:flex;align-items:center;">
+      <svg style="height:28px;width:auto;display:block;" viewBox="0 0 1485 264" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#nav_clip)"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.55174 30.9725L58.3404 0V129.033L0 95.4718V33.5842L4.55174 30.9725Z" fill="#37DBFF"/><path fill-rule="evenodd" clip-rule="evenodd" d="M74.1172 138.13V71.0137L116.656 95.4714L174.996 129.027V196.166L116.656 162.611L74.1172 138.13Z" fill="#F36FCE"/><path fill-rule="evenodd" clip-rule="evenodd" d="M116.656 162.611L174.997 196.167L116.656 229.722V162.611Z" fill="#BF2A95"/><path fill-rule="evenodd" clip-rule="evenodd" d="M58.3404 196.167L116.658 229.722L58.3404 263.306L0 229.722V162.611L58.3404 196.167Z" fill="#FBE221"/><path d="M1336.53 200.176C1327.19 200.176 1319.79 197.642 1314.33 192.576C1308.99 187.376 1306.33 179.242 1306.33 168.176V101.976V100.776L1310.73 78.1758H1329.53V166.176C1329.53 170.176 1330.53 173.109 1332.53 174.976C1334.53 176.842 1337.13 177.776 1340.33 177.776C1342.46 177.776 1344.39 177.642 1346.13 177.376C1347.86 177.109 1349.39 176.776 1350.73 176.376V197.976C1348.73 198.642 1346.59 199.176 1344.33 199.576C1342.19 199.976 1339.59 200.176 1336.53 200.176ZM1291.33 121.976V100.776H1350.73V121.976H1291.33Z" fill="white"/><path d="M1244.78 98.5762C1251.71 98.5762 1257.18 99.7095 1261.18 101.976C1265.18 104.243 1268.18 107.376 1270.18 111.376C1272.18 115.243 1273.44 119.643 1273.98 124.576C1274.64 129.376 1274.98 134.376 1274.98 139.576V198.376H1251.78V137.576C1251.78 131.043 1250.38 126.71 1247.58 124.576C1244.91 122.31 1241.58 121.176 1237.58 121.176C1233.84 121.176 1229.98 121.976 1225.98 123.576C1222.11 125.043 1218.58 127.11 1215.38 129.776C1212.18 132.31 1209.58 135.243 1207.58 138.576L1205.78 125.976H1210.78V198.376H1187.58V100.776H1204.98L1209.78 118.576L1202.98 118.776C1206.71 114.643 1210.78 111.11 1215.18 108.176C1219.58 105.109 1224.24 102.776 1229.18 101.176C1234.24 99.4428 1239.44 98.5762 1244.78 98.5762Z" fill="white"/><path d="M1121.77 200.376C1112.17 200.376 1103.77 198.31 1096.57 194.176C1089.37 189.91 1083.7 183.976 1079.57 176.376C1075.57 168.776 1073.57 159.91 1073.57 149.776C1073.57 139.51 1075.57 130.576 1079.57 122.976C1083.7 115.243 1089.37 109.243 1096.57 104.976C1103.77 100.71 1112.17 98.5762 1121.77 98.5762C1131.5 98.5762 1139.97 100.776 1147.17 105.176C1154.5 109.443 1160.17 115.443 1164.17 123.176C1168.17 130.776 1170.17 139.576 1170.17 149.576C1170.17 150.776 1170.1 151.976 1169.97 153.176C1169.97 154.376 1169.9 155.443 1169.77 156.376H1093.97V137.776H1152.57L1147.77 148.376C1147.77 139.176 1145.64 131.643 1141.37 125.776C1137.1 119.91 1130.64 116.976 1121.97 116.976C1114.1 116.976 1107.84 119.443 1103.17 124.376C1098.64 129.176 1096.37 135.576 1096.37 143.576V154.176C1096.37 162.443 1098.64 169.043 1103.17 173.976C1107.84 178.776 1114.24 181.176 1122.37 181.176C1129.7 181.176 1135.37 179.643 1139.37 176.576C1143.5 173.51 1147.04 169.71 1149.97 165.176L1166.57 175.176C1162.17 183.443 1156.3 189.71 1148.97 193.976C1141.64 198.243 1132.57 200.376 1121.77 200.376Z" fill="white"/><path d="M1043.75 200.176C1034.42 200.176 1027.02 197.642 1021.55 192.576C1016.22 187.376 1013.55 179.242 1013.55 168.176V101.976V100.776L1017.95 78.1758H1036.75V166.176C1036.75 170.176 1037.75 173.109 1039.75 174.976C1041.75 176.842 1044.35 177.776 1047.55 177.776C1049.69 177.776 1051.62 177.642 1053.35 177.376C1055.09 177.109 1056.62 176.776 1057.95 176.376V197.976C1055.95 198.642 1053.82 199.176 1051.55 199.576C1049.42 199.976 1046.82 200.176 1043.75 200.176ZM998.555 121.976V100.776H1057.95V121.976H998.555Z" fill="white"/><path d="M952.005 98.5762C958.938 98.5762 964.405 99.7095 968.405 101.976C972.405 104.243 975.405 107.376 977.405 111.376C979.405 115.243 980.671 119.643 981.205 124.576C981.871 129.376 982.205 134.376 982.205 139.576V198.376H959.005V137.576C959.005 131.043 957.605 126.71 954.805 124.576C952.138 122.31 948.805 121.176 944.805 121.176C941.071 121.176 937.205 121.976 933.205 123.576C929.338 125.043 925.805 127.11 922.605 129.776C919.405 132.31 916.805 135.243 914.805 138.576L913.005 125.976H918.005V198.376H894.805V100.776H912.205L917.005 118.576L910.205 118.776C913.938 114.643 918.005 111.11 922.405 108.176C926.805 105.109 931.471 102.776 936.405 101.176C941.471 99.4428 946.671 98.5762 952.005 98.5762Z" fill="white"/><path d="M825.927 200.576C815.927 200.576 807.127 198.443 799.527 194.176C791.927 189.91 785.994 183.976 781.727 176.376C777.594 168.643 775.527 159.776 775.527 149.776C775.527 139.51 777.594 130.576 781.727 122.976C785.994 115.243 791.927 109.243 799.527 104.976C807.127 100.71 815.927 98.5762 825.927 98.5762C835.927 98.5762 844.727 100.71 852.327 104.976C859.927 109.243 865.794 115.243 869.927 122.976C874.194 130.576 876.327 139.51 876.327 149.776C876.327 159.776 874.194 168.643 869.927 176.376C865.794 183.976 859.927 189.91 852.327 194.176C844.727 198.443 835.927 200.576 825.927 200.576ZM825.927 178.176C833.927 178.176 840.394 175.576 845.327 170.376C850.261 165.043 852.727 158.11 852.727 149.576C852.727 141.043 850.261 134.176 845.327 128.976C840.394 123.643 833.927 120.976 825.927 120.976C817.927 120.976 811.461 123.576 806.527 128.776C801.594 133.976 799.127 140.91 799.127 149.576C799.127 158.11 801.594 165.043 806.527 170.376C811.461 175.576 817.927 178.176 825.927 178.176Z" fill="white"/><path d="M722.775 200.576C712.775 200.576 704.042 198.376 696.575 193.976C689.242 189.576 683.508 183.576 679.375 175.976C675.375 168.376 673.375 159.576 673.375 149.576C673.375 139.576 675.375 130.776 679.375 123.176C683.508 115.443 689.242 109.443 696.575 105.176C704.042 100.776 712.775 98.5762 722.775 98.5762C732.775 98.5762 741.642 101.176 749.375 106.376C757.242 111.576 762.908 118.51 766.375 127.176L744.775 136.576C742.775 131.51 739.842 127.643 735.975 124.976C732.108 122.31 727.575 120.976 722.375 120.976C715.175 120.976 709.108 123.51 704.175 128.576C699.375 133.51 696.975 140.51 696.975 149.576C696.975 158.51 699.375 165.51 704.175 170.576C709.108 175.643 715.175 178.176 722.375 178.176C727.575 178.176 732.108 176.843 735.975 174.176C739.842 171.51 742.775 167.643 744.775 162.576L766.375 171.776C762.775 180.443 757.042 187.443 749.175 192.776C741.442 197.976 732.642 200.576 722.775 200.576Z" fill="white"/><path d="M643.559 200.176C634.226 200.176 626.826 197.642 621.359 192.576C616.026 187.376 613.359 179.242 613.359 168.176V101.976V100.776L617.759 78.1758H636.559V166.176C636.559 170.176 637.559 173.109 639.559 174.976C641.559 176.842 644.159 177.776 647.359 177.776C649.493 177.776 651.426 177.642 653.159 177.376C654.893 177.109 656.426 176.776 657.759 176.376V197.976C655.759 198.642 653.626 199.176 651.359 199.576C649.226 199.976 646.626 200.176 643.559 200.176ZM598.359 121.976V100.776H657.759V121.976H598.359Z" fill="white"/><path d="M549.871 200.776C542.671 200.776 535.738 199.176 529.071 195.976C522.404 192.776 516.671 187.376 511.871 179.776L527.671 167.776C531.671 172.576 535.471 176.043 539.071 178.176C542.671 180.309 547.071 181.376 552.271 181.376C556.004 181.376 558.938 180.443 561.071 178.576C563.204 176.709 564.271 174.376 564.271 171.576C564.271 169.709 563.738 168.043 562.671 166.576C561.604 165.109 559.604 163.776 556.671 162.576C553.871 161.243 549.804 159.909 544.471 158.576C534.604 156.043 527.071 152.576 521.871 148.176C516.804 143.776 514.271 137.243 514.271 128.576C514.271 123.109 515.671 118.109 518.471 113.576C521.271 108.909 525.338 105.243 530.671 102.576C536.004 99.776 542.271 98.376 549.471 98.376C558.138 98.376 565.538 100.109 571.671 103.576C577.804 107.043 582.671 111.176 586.271 115.976L570.071 128.776C567.804 126.243 564.738 123.909 560.871 121.776C557.138 119.509 552.604 118.376 547.271 118.376C544.071 118.376 541.204 119.176 538.671 120.776C536.138 122.376 534.871 124.643 534.871 127.576C534.871 130.376 536.138 132.709 538.671 134.576C541.204 136.443 546.004 138.176 553.071 139.776C564.938 142.576 573.404 146.309 578.471 150.976C583.538 155.643 586.071 161.776 586.071 169.376C586.071 175.776 584.404 181.376 581.071 186.176C577.738 190.843 573.338 194.443 567.871 196.976C562.404 199.509 556.404 200.776 549.871 200.776Z" fill="white"/><path d="M451.263 200.376C441.663 200.376 433.263 198.31 426.062 194.176C418.862 189.91 413.196 183.976 409.062 176.376C405.062 168.776 403.062 159.91 403.062 149.776C403.062 139.51 405.062 130.576 409.062 122.976C413.196 115.243 418.862 109.243 426.062 104.976C433.263 100.71 441.663 98.5762 451.263 98.5762C460.996 98.5762 469.463 100.776 476.663 105.176C483.996 109.443 489.663 115.443 493.663 123.176C497.663 130.776 499.663 139.576 499.663 149.576C499.663 150.776 499.596 151.976 499.463 153.176C499.463 154.376 499.396 155.443 499.263 156.376H423.462V137.776H482.062L477.263 148.376C477.263 139.176 475.129 131.643 470.863 125.776C466.596 119.91 460.129 116.976 451.463 116.976C443.596 116.976 437.329 119.443 432.663 124.376C428.129 129.176 425.863 135.576 425.863 143.576V154.176C425.863 162.443 428.129 169.043 432.663 173.976C437.329 178.776 443.729 181.176 451.863 181.176C459.196 181.176 464.863 179.643 468.863 176.576C472.996 173.51 476.529 169.71 479.463 165.176L496.062 175.176C491.662 183.443 485.796 189.71 478.462 193.976C471.129 198.243 462.063 200.376 451.263 200.376Z" fill="white"/><path d="M346 200.576C337.333 200.576 329.733 198.442 323.2 194.176C316.8 189.909 311.733 183.976 308 176.376C304.4 168.642 302.6 159.642 302.6 149.376C302.6 138.976 304.4 129.976 308 122.376C311.6 114.642 316.6 108.776 323 104.776C329.533 100.642 337.2 98.5758 346 98.5758C354.933 98.5758 362.8 100.709 369.6 104.976C376.4 109.242 381.667 115.176 385.4 122.776C389.133 130.376 391 139.242 391 149.376C391 159.509 389.133 168.442 385.4 176.176C381.667 183.776 376.4 189.776 369.6 194.176C362.933 198.442 355.067 200.576 346 200.576ZM295 198.376V62.1758H318.2V124.776H316.2V176.976H318.2L312.4 198.376H295ZM342.2 179.776C349.667 179.776 355.733 176.976 360.4 171.376C365.067 165.776 367.4 158.442 367.4 149.376C367.4 140.442 365.067 133.242 360.4 127.776C355.733 122.176 349.667 119.376 342.2 119.376C334.867 119.376 328.8 122.176 324 127.776C319.333 133.242 317 140.509 317 149.576C317 158.642 319.333 165.976 324 171.576C328.8 177.042 334.867 179.776 342.2 179.776Z" fill="white"/><path d="M1484.2 127.376H1471.62V62H1484.2V127.376Z" fill="white"/><path d="M1416.98 102.512H1449.23V114.224H1416.98V102.512ZM1403.34 127.376L1426.58 62H1441.26L1463.73 127.376H1451.06L1432.14 70.64H1435.79L1416.02 127.376H1403.34Z" fill="white"/></g><defs><clipPath id="nav_clip"><rect width="1485" height="264" fill="white"/></clipPath></defs></svg>
+    </a>
+    <div class="bc-nav-links">
+      <a href="https://bestcontent.ai/pt/products/social" class="bc-nav-link">Social</a>
+      <a href="https://bestcontent.ai/pt/products/chat" class="bc-nav-link">Chat</a>
+      <a href="https://bestcontent.ai/pt/products/blog" class="bc-nav-link">Blog</a>
+      <a href="https://bestcontent.ai/pt/products/links" class="bc-nav-link">Links</a>
+      <a href="#" class="bc-nav-link active">Central de Ajuda</a>
+    </div>
+    <a href="https://auth.bestcontent.ai/signup" target="_blank" class="bc-nav-cta">Teste Grátis</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><span></span>Suporte Disponível</div>
+    <h1>Central de Ajuda<br>
+      <svg style="height:clamp(1.6rem,4vw,2.8rem);width:auto;display:inline-block;vertical-align:middle;margin-top:6px;" viewBox="0 0 1485 264" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#hc_clip)"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.55174 30.9725L58.3404 0V129.033L0 95.4718V33.5842L4.55174 30.9725Z" fill="#37DBFF"/><path fill-rule="evenodd" clip-rule="evenodd" d="M74.1172 138.13V71.0137L116.656 95.4714L174.996 129.027V196.166L116.656 162.611L74.1172 138.13Z" fill="#F36FCE"/><path fill-rule="evenodd" clip-rule="evenodd" d="M116.656 162.611L174.997 196.167L116.656 229.722V162.611Z" fill="#BF2A95"/><path fill-rule="evenodd" clip-rule="evenodd" d="M58.3404 196.167L116.658 229.722L58.3404 263.306L0 229.722V162.611L58.3404 196.167Z" fill="#FBE221"/><path d="M1336.53 200.176C1327.19 200.176 1319.79 197.642 1314.33 192.576C1308.99 187.376 1306.33 179.242 1306.33 168.176V101.976V100.776L1310.73 78.1758H1329.53V166.176C1329.53 170.176 1330.53 173.109 1332.53 174.976C1334.53 176.842 1337.13 177.776 1340.33 177.776C1342.46 177.776 1344.39 177.642 1346.13 177.376C1347.86 177.109 1349.39 176.776 1350.73 176.376V197.976C1348.73 198.642 1346.59 199.176 1344.33 199.576C1342.19 199.976 1339.59 200.176 1336.53 200.176ZM1291.33 121.976V100.776H1350.73V121.976H1291.33Z" fill="white"/><path d="M1244.78 98.5762C1251.71 98.5762 1257.18 99.7095 1261.18 101.976C1265.18 104.243 1268.18 107.376 1270.18 111.376C1272.18 115.243 1273.44 119.643 1273.98 124.576C1274.64 129.376 1274.98 134.376 1274.98 139.576V198.376H1251.78V137.576C1251.78 131.043 1250.38 126.71 1247.58 124.576C1244.91 122.31 1241.58 121.176 1237.58 121.176C1233.84 121.176 1229.98 121.976 1225.98 123.576C1222.11 125.043 1218.58 127.11 1215.38 129.776C1212.18 132.31 1209.58 135.243 1207.58 138.576L1205.78 125.976H1210.78V198.376H1187.58V100.776H1204.98L1209.78 118.576L1202.98 118.776C1206.71 114.643 1210.78 111.11 1215.18 108.176C1219.58 105.109 1224.24 102.776 1229.18 101.176C1234.24 99.4428 1239.44 98.5762 1244.78 98.5762Z" fill="white"/><path d="M1121.77 200.376C1112.17 200.376 1103.77 198.31 1096.57 194.176C1089.37 189.91 1083.7 183.976 1079.57 176.376C1075.57 168.776 1073.57 159.91 1073.57 149.776C1073.57 139.51 1075.57 130.576 1079.57 122.976C1083.7 115.243 1089.37 109.243 1096.57 104.976C1103.77 100.71 1112.17 98.5762 1121.77 98.5762C1131.5 98.5762 1139.97 100.776 1147.17 105.176C1154.5 109.443 1160.17 115.443 1164.17 123.176C1168.17 130.776 1170.17 139.576 1170.17 149.576C1170.17 150.776 1170.1 151.976 1169.97 153.176C1169.97 154.376 1169.9 155.443 1169.77 156.376H1093.97V137.776H1152.57L1147.77 148.376C1147.77 139.176 1145.64 131.643 1141.37 125.776C1137.1 119.91 1130.64 116.976 1121.97 116.976C1114.1 116.976 1107.84 119.443 1103.17 124.376C1098.64 129.176 1096.37 135.576 1096.37 143.576V154.176C1096.37 162.443 1098.64 169.043 1103.17 173.976C1107.84 178.776 1114.24 181.176 1122.37 181.176C1129.7 181.176 1135.37 179.643 1139.37 176.576C1143.5 173.51 1147.04 169.71 1149.97 165.176L1166.57 175.176C1162.17 183.443 1156.3 189.71 1148.97 193.976C1141.64 198.243 1132.57 200.376 1121.77 200.376Z" fill="white"/><path d="M1043.75 200.176C1034.42 200.176 1027.02 197.642 1021.55 192.576C1016.22 187.376 1013.55 179.242 1013.55 168.176V101.976V100.776L1017.95 78.1758H1036.75V166.176C1036.75 170.176 1037.75 173.109 1039.75 174.976C1041.75 176.842 1044.35 177.776 1047.55 177.776C1049.69 177.776 1051.62 177.642 1053.35 177.376C1055.09 177.109 1056.62 176.776 1057.95 176.376V197.976C1055.95 198.642 1053.82 199.176 1051.55 199.576C1049.42 199.976 1046.82 200.176 1043.75 200.176ZM998.555 121.976V100.776H1057.95V121.976H998.555Z" fill="white"/><path d="M952.005 98.5762C958.938 98.5762 964.405 99.7095 968.405 101.976C972.405 104.243 975.405 107.376 977.405 111.376C979.405 115.243 980.671 119.643 981.205 124.576C981.871 129.376 982.205 134.376 982.205 139.576V198.376H959.005V137.576C959.005 131.043 957.605 126.71 954.805 124.576C952.138 122.31 948.805 121.176 944.805 121.176C941.071 121.176 937.205 121.976 933.205 123.576C929.338 125.043 925.805 127.11 922.605 129.776C919.405 132.31 916.805 135.243 914.805 138.576L913.005 125.976H918.005V198.376H894.805V100.776H912.205L917.005 118.576L910.205 118.776C913.938 114.643 918.005 111.11 922.405 108.176C926.805 105.109 931.471 102.776 936.405 101.176C941.471 99.4428 946.671 98.5762 952.005 98.5762Z" fill="white"/><path d="M825.927 200.576C815.927 200.576 807.127 198.443 799.527 194.176C791.927 189.91 785.994 183.976 781.727 176.376C777.594 168.643 775.527 159.776 775.527 149.776C775.527 139.51 777.594 130.576 781.727 122.976C785.994 115.243 791.927 109.243 799.527 104.976C807.127 100.71 815.927 98.5762 825.927 98.5762C835.927 98.5762 844.727 100.71 852.327 104.976C859.927 109.243 865.794 115.243 869.927 122.976C874.194 130.576 876.327 139.51 876.327 149.776C876.327 159.776 874.194 168.643 869.927 176.376C865.794 183.976 859.927 189.91 852.327 194.176C844.727 198.443 835.927 200.576 825.927 200.576ZM825.927 178.176C833.927 178.176 840.394 175.576 845.327 170.376C850.261 165.043 852.727 158.11 852.727 149.576C852.727 141.043 850.261 134.176 845.327 128.976C840.394 123.643 833.927 120.976 825.927 120.976C817.927 120.976 811.461 123.576 806.527 128.776C801.594 133.976 799.127 140.91 799.127 149.576C799.127 158.11 801.594 165.043 806.527 170.376C811.461 175.576 817.927 178.176 825.927 178.176Z" fill="white"/><path d="M722.775 200.576C712.775 200.576 704.042 198.376 696.575 193.976C689.242 189.576 683.508 183.576 679.375 175.976C675.375 168.376 673.375 159.576 673.375 149.576C673.375 139.576 675.375 130.776 679.375 123.176C683.508 115.443 689.242 109.443 696.575 105.176C704.042 100.776 712.775 98.5762 722.775 98.5762C732.775 98.5762 741.642 101.176 749.375 106.376C757.242 111.576 762.908 118.51 766.375 127.176L744.775 136.576C742.775 131.51 739.842 127.643 735.975 124.976C732.108 122.31 727.575 120.976 722.375 120.976C715.175 120.976 709.108 123.51 704.175 128.576C699.375 133.51 696.975 140.51 696.975 149.576C696.975 158.51 699.375 165.51 704.175 170.576C709.108 175.643 715.175 178.176 722.375 178.176C727.575 178.176 732.108 176.843 735.975 174.176C739.842 171.51 742.775 167.643 744.775 162.576L766.375 171.776C762.775 180.443 757.042 187.443 749.175 192.776C741.442 197.976 732.642 200.576 722.775 200.576Z" fill="white"/><path d="M643.559 200.176C634.226 200.176 626.826 197.642 621.359 192.576C616.026 187.376 613.359 179.242 613.359 168.176V101.976V100.776L617.759 78.1758H636.559V166.176C636.559 170.176 637.559 173.109 639.559 174.976C641.559 176.842 644.159 177.776 647.359 177.776C649.493 177.776 651.426 177.642 653.159 177.376C654.893 177.109 656.426 176.776 657.759 176.376V197.976C655.759 198.642 653.626 199.176 651.359 199.576C649.226 199.976 646.626 200.176 643.559 200.176ZM598.359 121.976V100.776H657.759V121.976H598.359Z" fill="white"/><path d="M549.871 200.776C542.671 200.776 535.738 199.176 529.071 195.976C522.404 192.776 516.671 187.376 511.871 179.776L527.671 167.776C531.671 172.576 535.471 176.043 539.071 178.176C542.671 180.309 547.071 181.376 552.271 181.376C556.004 181.376 558.938 180.443 561.071 178.576C563.204 176.709 564.271 174.376 564.271 171.576C564.271 169.709 563.738 168.043 562.671 166.576C561.604 165.109 559.604 163.776 556.671 162.576C553.871 161.243 549.804 159.909 544.471 158.576C534.604 156.043 527.071 152.576 521.871 148.176C516.804 143.776 514.271 137.243 514.271 128.576C514.271 123.109 515.671 118.109 518.471 113.576C521.271 108.909 525.338 105.243 530.671 102.576C536.004 99.776 542.271 98.376 549.471 98.376C558.138 98.376 565.538 100.109 571.671 103.576C577.804 107.043 582.671 111.176 586.271 115.976L570.071 128.776C567.804 126.243 564.738 123.909 560.871 121.776C557.138 119.509 552.604 118.376 547.271 118.376C544.071 118.376 541.204 119.176 538.671 120.776C536.138 122.376 534.871 124.643 534.871 127.576C534.871 130.376 536.138 132.709 538.671 134.576C541.204 136.443 546.004 138.176 553.071 139.776C564.938 142.576 573.404 146.309 578.471 150.976C583.538 155.643 586.071 161.776 586.071 169.376C586.071 175.776 584.404 181.376 581.071 186.176C577.738 190.843 573.338 194.443 567.871 196.976C562.404 199.509 556.404 200.776 549.871 200.776Z" fill="white"/><path d="M451.263 200.376C441.663 200.376 433.263 198.31 426.062 194.176C418.862 189.91 413.196 183.976 409.062 176.376C405.062 168.776 403.062 159.91 403.062 149.776C403.062 139.51 405.062 130.576 409.062 122.976C413.196 115.243 418.862 109.243 426.062 104.976C433.263 100.71 441.663 98.5762 451.263 98.5762C460.996 98.5762 469.463 100.776 476.663 105.176C483.996 109.443 489.663 115.443 493.663 123.176C497.663 130.776 499.663 139.576 499.663 149.576C499.663 150.776 499.596 151.976 499.463 153.176C499.463 154.376 499.396 155.443 499.263 156.376H423.462V137.776H482.062L477.263 148.376C477.263 139.176 475.129 131.643 470.863 125.776C466.596 119.91 460.129 116.976 451.463 116.976C443.596 116.976 437.329 119.443 432.663 124.376C428.129 129.176 425.863 135.576 425.863 143.576V154.176C425.863 162.443 428.129 169.043 432.663 173.976C437.329 178.776 443.729 181.176 451.863 181.176C459.196 181.176 464.863 179.643 468.863 176.576C472.996 173.51 476.529 169.71 479.463 165.176L496.062 175.176C491.662 183.443 485.796 189.71 478.462 193.976C471.129 198.243 462.063 200.376 451.263 200.376Z" fill="white"/><path d="M346 200.576C337.333 200.576 329.733 198.442 323.2 194.176C316.8 189.909 311.733 183.976 308 176.376C304.4 168.642 302.6 159.642 302.6 149.376C302.6 138.976 304.4 129.976 308 122.376C311.6 114.642 316.6 108.776 323 104.776C329.533 100.642 337.2 98.5758 346 98.5758C354.933 98.5758 362.8 100.709 369.6 104.976C376.4 109.242 381.667 115.176 385.4 122.776C389.133 130.376 391 139.242 391 149.376C391 159.509 389.133 168.442 385.4 176.176C381.667 183.776 376.4 189.776 369.6 194.176C362.933 198.442 355.067 200.576 346 200.576ZM295 198.376V62.1758H318.2V124.776H316.2V176.976H318.2L312.4 198.376H295ZM342.2 179.776C349.667 179.776 355.733 176.976 360.4 171.376C365.067 165.776 367.4 158.442 367.4 149.376C367.4 140.442 365.067 133.242 360.4 127.776C355.733 122.176 349.667 119.376 342.2 119.376C334.867 119.376 328.8 122.176 324 127.776C319.333 133.242 317 140.509 317 149.576C317 158.642 319.333 165.976 324 171.576C328.8 177.042 334.867 179.776 342.2 179.776Z" fill="white"/><path d="M1484.2 127.376H1471.62V62H1484.2V127.376Z" fill="white"/><path d="M1416.98 102.512H1449.23V114.224H1416.98V102.512ZM1403.34 127.376L1426.58 62H1441.26L1463.73 127.376H1451.06L1432.14 70.64H1435.79L1416.02 127.376H1403.34Z" fill="white"/></g><defs><clipPath id="hc_clip"><rect width="1485" height="264" fill="white"/></clipPath></defs></svg>
+    </h1>
+    <p>Guias passo a passo para resolver qualquer dúvida agora mesmo, sem precisar esperar.</p>
+    <div class="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input type="text" id="searchInput" placeholder="Busque sua dúvida… ex: reembolso, créditos, acesso" autocomplete="off">
+    </div>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-num">9.1/10</div><div class="stat-label">Satisfação Reclame Aqui</div></div>
+      <div class="stat-item"><div class="stat-num">+50k</div><div class="stat-label">Usuários Ativos</div></div>
+      <div class="stat-item"><div class="stat-num">+224k</div><div class="stat-label">Conteúdos Criados</div></div>
+    </div>
+  </section>
+
+  <main>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" data-filter="all">Todos os tópicos</button>
+      <button class="tab" data-filter="financeiro">💳 Financeiro</button>
+      <button class="tab" data-filter="conta">👤 Conta & Acesso</button>
+      <button class="tab" data-filter="creditos">⚡ Créditos</button>
+    </div>
+
+    <div class="faq-list" id="faqList">
+
+      <!-- 1. COBRANÇA DUPLICADA -->
+      <div class="faq-item" data-category="financeiro" data-keywords="cobrado duas vezes erro cartao cobrança duplicada estorno">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <div class="faq-icon-wrap" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.15);">💳</div>
+          <span class="faq-title">Fui cobrado duas vezes ou identifiquei um erro no meu cartão. O que fazer?</span>
+          <span class="faq-badge badge-red">Urgente</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Cobranças duplicadas são raras, mas acontecem. Siga os passos abaixo para resolver sem abrir disputa na operadora — o que atrasa semanas o processo.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Confirme a cobrança duplicada:</strong> Acesse o extrato do cartão ou conta bancária e identifique as duas cobranças com o mesmo valor e data da BestContent.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Salve o comprovante:</strong> Tire um print do extrato, salve o PDF do banco ou fotografe a tela. Você vai precisar enviar como evidência.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Abra o suporte pelo WhatsApp:</strong> Clique em "Falar no WhatsApp" abaixo, informe que se trata de cobrança duplicada e qual o valor cobrado incorretamente.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Envie o comprovante:</strong> Anexe a imagem ou PDF diretamente no WhatsApp. Nossa equipe financeira confirma a duplicidade nos sistemas em minutos.</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Aguarde o estorno:</strong> Confirmada a duplicidade, o estorno é processado em <strong>até 2 dias úteis</strong>. Pode levar até 2 ciclos de fatura para aparecer no extrato do cartão.</div></div>
+          </div>
+          <div class="tip tip-warn"><span>⚠️</span><div><strong>Não abra disputa na operadora do cartão</strong> antes de falar conosco. Isso congela o processo e pode atrasar seu estorno em semanas.</div></div>
+        </div></div>
+      </div>
+
+      <!-- 2. CANCELAMENTO -->
+      <div class="faq-item" data-category="financeiro" data-keywords="cancelamento reembolso politica arrependimento devolver dinheiro">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <div class="faq-icon-wrap" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.15);">↩️</div>
+          <span class="faq-title">Como funciona a política de cancelamento e reembolso?</span>
+          <span class="faq-badge badge-green">CDC Garantido</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Respeitamos integralmente o Código de Defesa do Consumidor. Veja o passo a passo para cada situação.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Reembolso por arrependimento (até 7 dias após a compra):</strong> Acesse <em>Minha Conta → Assinatura → Cancelar Plano</em> e selecione "Solicitar reembolso por arrependimento". O valor total é devolvido sem questionamentos.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Cancelar renovação automática (após 7 dias):</strong> Vá em <em>Minha Conta → Assinatura → Cancelar Renovação</em>. O acesso continua até o fim do ciclo já pago — apenas futuras cobranças são interrompidas.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Confirme o cancelamento:</strong> Você receberá um e-mail automático de confirmação. Guarde-o como comprovante.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Acompanhe o estorno:</strong> Para cancelamentos dentro de 7 dias, o valor retorna em até 2 ciclos de faturamento do seu cartão.</div></div>
+          </div>
+          <div class="tip tip-info"><span>ℹ️</span><div>Não tem certeza qual situação se aplica ao seu caso? Entre em contato antes de cancelar — podemos encontrar uma solução melhor para você.</div></div>
+        </div></div>
+      </div>
+
+      <!-- 3. CRÉDITO SUMIU -->
+      <div class="faq-item" data-category="creditos" data-keywords="credito sumiu post nao gerou falha tecnica erro agendamento">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <div class="faq-icon-wrap" style="background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.15);">⚡</div>
+          <span class="faq-title">Tentei gerar um post, o crédito foi descontado, mas o conteúdo não apareceu.</span>
+          <span class="faq-badge badge-purple">Técnico</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Quando ocorre uma falha técnica durante a geração, o crédito pode ser consumido mesmo sem o conteúdo aparecer. Veja como recuperar seus créditos:</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Aguarde 2 minutos e recarregue a página:</strong> Às vezes o conteúdo ainda está sendo processado. Acesse <em>Meu Histórico</em> para verificar se o post apareceu lá antes de abrir chamado.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Anote o horário da tentativa:</strong> Você precisará informar a data e hora aproximadas em que tentou gerar. Confira no histórico do navegador se necessário.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Acesse o suporte pelo WhatsApp:</strong> Clique em "Falar no WhatsApp" abaixo e informe que ocorreu falha técnica com perda de crédito.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Descreva os detalhes:</strong> Informe o que tentou gerar, o horário da tentativa e quantos créditos foram descontados. Quanto mais detalhes, mais rápida a análise.</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Créditos devolvidos em até 24h:</strong> Nossa equipe revisa os logs do servidor e, confirmada a falha, os créditos são estornados automaticamente para sua conta.</div></div>
+          </div>
+          <div class="tip tip-ok"><span>✅</span><div>Se a falha foi do nosso sistema, <strong>100% dos créditos são devolvidos</strong>, sem necessidade de negociação.</div></div>
+        </div></div>
+      </div>
+
+      <!-- 4. RECUPERAR CONTA -->
+      <div class="faq-item" data-category="conta" data-keywords="mudei email nao consigo acessar conta pro senha login recuperar">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <div class="faq-icon-wrap" style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.15);">🔐</div>
+          <span class="faq-title">Mudei de e-mail ou não consigo acessar minha conta Pro. Como resolver?</span>
+          <span class="faq-badge badge-red">Acesso</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Perdeu acesso ao e-mail vinculado à sua conta? Veja o passo a passo completo para recuperar sem perder assinatura, créditos ou histórico.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Tente recuperar o e-mail original primeiro:</strong> Se ainda tem acesso ao provedor (Gmail, Outlook…), redefina a senha por lá. Muitas vezes o problema é apenas a senha do e-mail, não da conta BestContent.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Sem acesso ao e-mail original?</strong> Clique em "Falar no WhatsApp" abaixo e informe que precisa de recuperação de conta por troca de e-mail.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Prepare os documentos de validação:</strong> Nossa equipe confirmará sua identidade. Tenha em mãos: CPF ou CNPJ do cadastro, comprovante do último pagamento e o nome completo cadastrado.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Informe o novo e-mail:</strong> Após validação, a assinatura Pro é migrada para o novo endereço — sem perda de histórico, créditos ou configurações de marca.</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Redefina sua senha:</strong> Com o novo e-mail ativo, use <em>"Esqueci minha senha"</em> na tela de login para criar uma nova senha segura.</div></div>
+          </div>
+          <div class="tip tip-info"><span>🔒</span><div>A validação de identidade existe para <strong>proteger você</strong> — ninguém mais pode reivindicar sua conta sem comprovar ser o titular.</div></div>
+        </div></div>
+      </div>
+
+      <!-- 5. CRÉDITOS RÁPIDO -->
+      <div class="faq-item" data-category="creditos" data-keywords="creditos acabando rapido tokens consumo plano advanced otimizar economizar">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <div class="faq-icon-wrap" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.15);">📊</div>
+          <span class="faq-title">Meus créditos acabam muito rápido. Como entender e otimizar o consumo?</span>
+          <span class="faq-badge badge-green">Dica</span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <p>Cada geração consome tokens da IA com base na complexidade do conteúdo. Siga este guia para entender seu consumo e economizar sem perder qualidade.</p>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Verifique o extrato de créditos:</strong> Acesse <em>Minha Conta → Créditos → Ver extrato</em>. Você verá cada geração com custo individual e identificará quais tipos de conteúdo consomem mais.</div></div>
+            <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Configure as "Configurações de Marca" antes de gerar em massa:</strong> Com tom de voz, nicho e formato salvos, a IA precisa de menos tokens para contextualizar. Vá em <em>Configurações → Marca</em> e preencha todos os campos.</div></div>
+            <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Use "Editar post" ao invés de regenerar do zero:</strong> Se um post ficou 80% bom, use a função Editar para ajustar partes específicas — consome muito menos créditos que uma nova geração completa.</div></div>
+            <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Use o "Rascunho rápido" para testes:</strong> Ao experimentar novos formatos, use esse modo — ele gera uma versão simplificada com custo reduzido para validar a ideia antes da geração final.</div></div>
+            <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Considere o plano Advanced para uso intenso:</strong> Se você gera mais de 30 posts por mês, o plano Advanced tem custo por crédito menor e créditos adicionais que nunca expiram.</div></div>
+          </div>
+          <div class="tip tip-ok"><span>💡</span><div>Usuários que configuram a Marca antes de gerar economizam em média <strong>35% dos créditos</strong> por mês.</div></div>
+        </div></div>
+      </div>
+
+    </div><!-- /faq-list -->
+
+    <!-- NO RESULTS -->
+    <div class="no-results" id="noResults">
+      <div class="nr-icon">🤔</div>
+      <p><strong style="color:var(--text-main);">Nenhum resultado encontrado.</strong><br>Tente outras palavras-chave ou <a href="https://api.whatsapp.com/send?phone=558592097380&text=Ol%C3%A1%2C%20vim%20do%20Website%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20BestContent" target="_blank" rel="noopener">fale conosco no WhatsApp</a>.</p>
+    </div>
+
+    <!-- CONTACT BANNER -->
+    <div class="contact-banner">
+      <div class="contact-banner-text">
+        <h3>Não encontrou o que precisava?</h3>
+        <p>Nossa equipe responde em minutos. 🟢 Online agora</p>
+      </div>
+      <div class="contact-buttons">
+        <a href="https://api.whatsapp.com/send?phone=558592097380&text=Ol%C3%A1%2C%20vim%20do%20Website%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20BestContent" target="_blank" rel="noopener" class="btn btn-whatsapp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://api.whatsapp.com/send?phone=558592097380&text=Ol%C3%A1%2C%20vim%20do%20Website%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20BestContent"
+     target="_blank" rel="noopener"
+     id="wa-float"
+     aria-label="Falar no WhatsApp">
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="16" fill="url(#wa_grad)"/>
+      <path d="M32 13C21.507 13 13 21.507 13 32C13 35.48 13.97 38.74 15.66 41.52L13.07 51L22.8 48.46C25.47 49.98 28.63 50.87 32 50.87C42.493 50.87 51 42.363 51 31.87C51 21.377 42.493 13 32 13Z" fill="white" fill-opacity="0.15"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M32 15.5C22.887 15.5 15.5 22.887 15.5 32C15.5 35.18 16.41 38.15 17.99 40.67L15.8 48.2L23.54 46.05C25.97 47.46 28.79 48.27 31.8 48.27C40.913 48.27 48.3 40.883 48.3 31.77C48.3 22.657 40.913 15.5 32 15.5ZM23.96 27.12C24.22 26.86 24.56 26.72 24.91 26.72C25.07 26.72 25.23 26.75 25.38 26.8C25.75 26.93 26.06 27.2 26.24 27.55L27.48 30.05C27.67 30.43 27.67 30.88 27.47 31.25L26.78 32.5C26.68 32.69 26.67 32.91 26.77 33.1C27.23 33.99 28.07 35.19 29.17 36.24C30.27 37.29 31.57 38.16 32.53 38.59C32.73 38.68 32.96 38.66 33.14 38.54L34.33 37.72C34.68 37.48 35.12 37.44 35.51 37.61L38.12 38.74C38.5 38.91 38.78 39.23 38.9 39.62C39.02 40.01 38.96 40.43 38.74 40.77C38.3 41.43 37.67 41.96 36.93 42.26C36.19 42.56 35.38 42.62 34.6 42.43C32.53 41.92 29.56 40.35 27.1 37.96C24.64 35.57 22.96 32.67 22.39 30.61C22.17 29.83 22.21 29.01 22.49 28.26C22.77 27.51 23.28 26.87 23.96 27.12Z" fill="white"/>
+      <defs>
+        <linearGradient id="wa_grad" x1="32" y1="0" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#25D366"/>
+          <stop offset="100%" stop-color="#128C7E"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </a>
+
+  <style>
+    #wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 99998;
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.45), 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      animation: waPopIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    #wa-float img {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: block;
+    }
+    #wa-float:hover {
+      transform: scale(1.12) translateY(-3px);
+      box-shadow: 0 14px 40px rgba(37,211,102,0.55), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    #wa-float::after {
+      content: 'Falar agora';
+      position: absolute;
+      right: 74px;
+      background: #1a2a1a;
+      color: #86efac;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      transform: translateX(6px);
+      border: 1px solid rgba(34,197,94,0.25);
+    }
+    #wa-float:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    @keyframes waPopIn {
+      0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+    /* Pulse ring */
+    #wa-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 22px;
+      border: 2px solid rgba(37,211,102,0.4);
+      animation: waPulse 2.5s ease-out infinite;
+    }
+    @keyframes waPulse {
+      0%   { transform: scale(1);   opacity: 0.7; }
+      70%  { transform: scale(1.25); opacity: 0; }
+      100% { transform: scale(1.25); opacity: 0; }
+    }
+  </style>
+
+  <!-- FOOTER -->
+  <footer id="bc-footer-root">
+    <div class="bcf-glow-spot"></div>
+    <div class="bcf-container">
+      <div class="bcf-top-grid">
+        <div class="bcf-brand-col">
+          <a href="https://bestcontent.ai" style="text-decoration:none;display:inline-flex;align-items:center;">
+            <svg style="height:34px;width:auto;display:block;" viewBox="0 0 1485 264" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ft_clip)"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.55174 30.9725L58.3404 0V129.033L0 95.4718V33.5842L4.55174 30.9725Z" fill="#37DBFF"/><path fill-rule="evenodd" clip-rule="evenodd" d="M74.1172 138.13V71.0137L116.656 95.4714L174.996 129.027V196.166L116.656 162.611L74.1172 138.13Z" fill="#F36FCE"/><path fill-rule="evenodd" clip-rule="evenodd" d="M116.656 162.611L174.997 196.167L116.656 229.722V162.611Z" fill="#BF2A95"/><path fill-rule="evenodd" clip-rule="evenodd" d="M58.3404 196.167L116.658 229.722L58.3404 263.306L0 229.722V162.611L58.3404 196.167Z" fill="#FBE221"/><path d="M1336.53 200.176C1327.19 200.176 1319.79 197.642 1314.33 192.576C1308.99 187.376 1306.33 179.242 1306.33 168.176V101.976V100.776L1310.73 78.1758H1329.53V166.176C1329.53 170.176 1330.53 173.109 1332.53 174.976C1334.53 176.842 1337.13 177.776 1340.33 177.776C1342.46 177.776 1344.39 177.642 1346.13 177.376C1347.86 177.109 1349.39 176.776 1350.73 176.376V197.976C1348.73 198.642 1346.59 199.176 1344.33 199.576C1342.19 199.976 1339.59 200.176 1336.53 200.176ZM1291.33 121.976V100.776H1350.73V121.976H1291.33Z" fill="white"/><path d="M1244.78 98.5762C1251.71 98.5762 1257.18 99.7095 1261.18 101.976C1265.18 104.243 1268.18 107.376 1270.18 111.376C1272.18 115.243 1273.44 119.643 1273.98 124.576C1274.64 129.376 1274.98 134.376 1274.98 139.576V198.376H1251.78V137.576C1251.78 131.043 1250.38 126.71 1247.58 124.576C1244.91 122.31 1241.58 121.176 1237.58 121.176C1233.84 121.176 1229.98 121.976 1225.98 123.576C1222.11 125.043 1218.58 127.11 1215.38 129.776C1212.18 132.31 1209.58 135.243 1207.58 138.576L1205.78 125.976H1210.78V198.376H1187.58V100.776H1204.98L1209.78 118.576L1202.98 118.776C1206.71 114.643 1210.78 111.11 1215.18 108.176C1219.58 105.109 1224.24 102.776 1229.18 101.176C1234.24 99.4428 1239.44 98.5762 1244.78 98.5762Z" fill="white"/><path d="M1121.77 200.376C1112.17 200.376 1103.77 198.31 1096.57 194.176C1089.37 189.91 1083.7 183.976 1079.57 176.376C1075.57 168.776 1073.57 159.91 1073.57 149.776C1073.57 139.51 1075.57 130.576 1079.57 122.976C1083.7 115.243 1089.37 109.243 1096.57 104.976C1103.77 100.71 1112.17 98.5762 1121.77 98.5762C1131.5 98.5762 1139.97 100.776 1147.17 105.176C1154.5 109.443 1160.17 115.443 1164.17 123.176C1168.17 130.776 1170.17 139.576 1170.17 149.576C1170.17 150.776 1170.1 151.976 1169.97 153.176C1169.97 154.376 1169.9 155.443 1169.77 156.376H1093.97V137.776H1152.57L1147.77 148.376C1147.77 139.176 1145.64 131.643 1141.37 125.776C1137.1 119.91 1130.64 116.976 1121.97 116.976C1114.1 116.976 1107.84 119.443 1103.17 124.376C1098.64 129.176 1096.37 135.576 1096.37 143.576V154.176C1096.37 162.443 1098.64 169.043 1103.17 173.976C1107.84 178.776 1114.24 181.176 1122.37 181.176C1129.7 181.176 1135.37 179.643 1139.37 176.576C1143.5 173.51 1147.04 169.71 1149.97 165.176L1166.57 175.176C1162.17 183.443 1156.3 189.71 1148.97 193.976C1141.64 198.243 1132.57 200.376 1121.77 200.376Z" fill="white"/><path d="M1043.75 200.176C1034.42 200.176 1027.02 197.642 1021.55 192.576C1016.22 187.376 1013.55 179.242 1013.55 168.176V101.976V100.776L1017.95 78.1758H1036.75V166.176C1036.75 170.176 1037.75 173.109 1039.75 174.976C1041.75 176.842 1044.35 177.776 1047.55 177.776C1049.69 177.776 1051.62 177.642 1053.35 177.376C1055.09 177.109 1056.62 176.776 1057.95 176.376V197.976C1055.95 198.642 1053.82 199.176 1051.55 199.576C1049.42 199.976 1046.82 200.176 1043.75 200.176ZM998.555 121.976V100.776H1057.95V121.976H998.555Z" fill="white"/><path d="M952.005 98.5762C958.938 98.5762 964.405 99.7095 968.405 101.976C972.405 104.243 975.405 107.376 977.405 111.376C979.405 115.243 980.671 119.643 981.205 124.576C981.871 129.376 982.205 134.376 982.205 139.576V198.376H959.005V137.576C959.005 131.043 957.605 126.71 954.805 124.576C952.138 122.31 948.805 121.176 944.805 121.176C941.071 121.176 937.205 121.976 933.205 123.576C929.338 125.043 925.805 127.11 922.605 129.776C919.405 132.31 916.805 135.243 914.805 138.576L913.005 125.976H918.005V198.376H894.805V100.776H912.205L917.005 118.576L910.205 118.776C913.938 114.643 918.005 111.11 922.405 108.176C926.805 105.109 931.471 102.776 936.405 101.176C941.471 99.4428 946.671 98.5762 952.005 98.5762Z" fill="white"/><path d="M825.927 200.576C815.927 200.576 807.127 198.443 799.527 194.176C791.927 189.91 785.994 183.976 781.727 176.376C777.594 168.643 775.527 159.776 775.527 149.776C775.527 139.51 777.594 130.576 781.727 122.976C785.994 115.243 791.927 109.243 799.527 104.976C807.127 100.71 815.927 98.5762 825.927 98.5762C835.927 98.5762 844.727 100.71 852.327 104.976C859.927 109.243 865.794 115.243 869.927 122.976C874.194 130.576 876.327 139.51 876.327 149.776C876.327 159.776 874.194 168.643 869.927 176.376C865.794 183.976 859.927 189.91 852.327 194.176C844.727 198.443 835.927 200.576 825.927 200.576ZM825.927 178.176C833.927 178.176 840.394 175.576 845.327 170.376C850.261 165.043 852.727 158.11 852.727 149.576C852.727 141.043 850.261 134.176 845.327 128.976C840.394 123.643 833.927 120.976 825.927 120.976C817.927 120.976 811.461 123.576 806.527 128.776C801.594 133.976 799.127 140.91 799.127 149.576C799.127 158.11 801.594 165.043 806.527 170.376C811.461 175.576 817.927 178.176 825.927 178.176Z" fill="white"/><path d="M722.775 200.576C712.775 200.576 704.042 198.376 696.575 193.976C689.242 189.576 683.508 183.576 679.375 175.976C675.375 168.376 673.375 159.576 673.375 149.576C673.375 139.576 675.375 130.776 679.375 123.176C683.508 115.443 689.242 109.443 696.575 105.176C704.042 100.776 712.775 98.5762 722.775 98.5762C732.775 98.5762 741.642 101.176 749.375 106.376C757.242 111.576 762.908 118.51 766.375 127.176L744.775 136.576C742.775 131.51 739.842 127.643 735.975 124.976C732.108 122.31 727.575 120.976 722.375 120.976C715.175 120.976 709.108 123.51 704.175 128.576C699.375 133.51 696.975 140.51 696.975 149.576C696.975 158.51 699.375 165.51 704.175 170.576C709.108 175.643 715.175 178.176 722.375 178.176C727.575 178.176 732.108 176.843 735.975 174.176C739.842 171.51 742.775 167.643 744.775 162.576L766.375 171.776C762.775 180.443 757.042 187.443 749.175 192.776C741.442 197.976 732.642 200.576 722.775 200.576Z" fill="white"/><path d="M643.559 200.176C634.226 200.176 626.826 197.642 621.359 192.576C616.026 187.376 613.359 179.242 613.359 168.176V101.976V100.776L617.759 78.1758H636.559V166.176C636.559 170.176 637.559 173.109 639.559 174.976C641.559 176.842 644.159 177.776 647.359 177.776C649.493 177.776 651.426 177.642 653.159 177.376C654.893 177.109 656.426 176.776 657.759 176.376V197.976C655.759 198.642 653.626 199.176 651.359 199.576C649.226 199.976 646.626 200.176 643.559 200.176ZM598.359 121.976V100.776H657.759V121.976H598.359Z" fill="white"/><path d="M549.871 200.776C542.671 200.776 535.738 199.176 529.071 195.976C522.404 192.776 516.671 187.376 511.871 179.776L527.671 167.776C531.671 172.576 535.471 176.043 539.071 178.176C542.671 180.309 547.071 181.376 552.271 181.376C556.004 181.376 558.938 180.443 561.071 178.576C563.204 176.709 564.271 174.376 564.271 171.576C564.271 169.709 563.738 168.043 562.671 166.576C561.604 165.109 559.604 163.776 556.671 162.576C553.871 161.243 549.804 159.909 544.471 158.576C534.604 156.043 527.071 152.576 521.871 148.176C516.804 143.776 514.271 137.243 514.271 128.576C514.271 123.109 515.671 118.109 518.471 113.576C521.271 108.909 525.338 105.243 530.671 102.576C536.004 99.776 542.271 98.376 549.471 98.376C558.138 98.376 565.538 100.109 571.671 103.576C577.804 107.043 582.671 111.176 586.271 115.976L570.071 128.776C567.804 126.243 564.738 123.909 560.871 121.776C557.138 119.509 552.604 118.376 547.271 118.376C544.071 118.376 541.204 119.176 538.671 120.776C536.138 122.376 534.871 124.643 534.871 127.576C534.871 130.376 536.138 132.709 538.671 134.576C541.204 136.443 546.004 138.176 553.071 139.776C564.938 142.576 573.404 146.309 578.471 150.976C583.538 155.643 586.071 161.776 586.071 169.376C586.071 175.776 584.404 181.376 581.071 186.176C577.738 190.843 573.338 194.443 567.871 196.976C562.404 199.509 556.404 200.776 549.871 200.776Z" fill="white"/><path d="M451.263 200.376C441.663 200.376 433.263 198.31 426.062 194.176C418.862 189.91 413.196 183.976 409.062 176.376C405.062 168.776 403.062 159.91 403.062 149.776C403.062 139.51 405.062 130.576 409.062 122.976C413.196 115.243 418.862 109.243 426.062 104.976C433.263 100.71 441.663 98.5762 451.263 98.5762C460.996 98.5762 469.463 100.776 476.663 105.176C483.996 109.443 489.663 115.443 493.663 123.176C497.663 130.776 499.663 139.576 499.663 149.576C499.663 150.776 499.596 151.976 499.463 153.176C499.463 154.376 499.396 155.443 499.263 156.376H423.462V137.776H482.062L477.263 148.376C477.263 139.176 475.129 131.643 470.863 125.776C466.596 119.91 460.129 116.976 451.463 116.976C443.596 116.976 437.329 119.443 432.663 124.376C428.129 129.176 425.863 135.576 425.863 143.576V154.176C425.863 162.443 428.129 169.043 432.663 173.976C437.329 178.776 443.729 181.176 451.863 181.176C459.196 181.176 464.863 179.643 468.863 176.576C472.996 173.51 476.529 169.71 479.463 165.176L496.062 175.176C491.662 183.443 485.796 189.71 478.462 193.976C471.129 198.243 462.063 200.376 451.263 200.376Z" fill="white"/><path d="M346 200.576C337.333 200.576 329.733 198.442 323.2 194.176C316.8 189.909 311.733 183.976 308 176.376C304.4 168.642 302.6 159.642 302.6 149.376C302.6 138.976 304.4 129.976 308 122.376C311.6 114.642 316.6 108.776 323 104.776C329.533 100.642 337.2 98.5758 346 98.5758C354.933 98.5758 362.8 100.709 369.6 104.976C376.4 109.242 381.667 115.176 385.4 122.776C389.133 130.376 391 139.242 391 149.376C391 159.509 389.133 168.442 385.4 176.176C381.667 183.776 376.4 189.776 369.6 194.176C362.933 198.442 355.067 200.576 346 200.576ZM295 198.376V62.1758H318.2V124.776H316.2V176.976H318.2L312.4 198.376H295ZM342.2 179.776C349.667 179.776 355.733 176.976 360.4 171.376C365.067 165.776 367.4 158.442 367.4 149.376C367.4 140.442 365.067 133.242 360.4 127.776C355.733 122.176 349.667 119.376 342.2 119.376C334.867 119.376 328.8 122.176 324 127.776C319.333 133.242 317 140.509 317 149.576C317 158.642 319.333 165.976 324 171.576C328.8 177.042 334.867 179.776 342.2 179.776Z" fill="white"/><path d="M1484.2 127.376H1471.62V62H1484.2V127.376Z" fill="white"/><path d="M1416.98 102.512H1449.23V114.224H1416.98V102.512ZM1403.34 127.376L1426.58 62H1441.26L1463.73 127.376H1451.06L1432.14 70.64H1435.79L1416.02 127.376H1403.34Z" fill="white"/></g><defs><clipPath id="ft_clip"><rect width="1485" height="264" fill="white"/></clipPath></defs></svg>
+          </a>
+          <p class="bcf-desc-text">Alcance milhares de clientes postando nas redes sociais todos os dias, sem esforço. O sistema operacional do seu marketing.</p>
+          <div class="bcf-socials-wrapper">
+            <a href="https://www.linkedin.com/company/bestcontent-ai/" target="_blank" class="bcf-social-item" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/bestcontentbrasil/" target="_blank" class="bcf-social-item" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/bestcontentbrasil/" target="_blank" class="bcf-social-item" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@bestcontentbrasil" target="_blank" class="bcf-social-item" aria-label="YouTube">
+              <svg viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="bcf-nav-grid">
+          <div class="bcf-nav-group">
+            <span class="bcf-nav-header">Produtos</span>
+            <ul class="bcf-nav-ul">
+              <li><a href="https://bestcontent.ai/products/social" class="bcf-nav-item">BestContent Social</a></li>
+              <li><a href="https://bestcontent.ai/pt/products/chat" class="bcf-nav-item">BestContent Chat 2.0</a></li>
+              <li><a href="https://bestcontent.ai/pt/products/blog" class="bcf-nav-item">BestContent Blogs</a></li>
+              <li><a href="https://bestcontent.ai/pt/products/links" class="bcf-nav-item">BestContent Links</a></li>
+            </ul>
+          </div>
+          <div class="bcf-nav-group">
+            <span class="bcf-nav-header">Explorar</span>
+            <ul class="bcf-nav-ul">
+              <li><a href="https://bestcontent.ai/sobre-nos" class="bcf-nav-item">Sobre a BestContent AI</a></li>
+              <li><a href="https://bestcontent.ai/blog" class="bcf-nav-item">Blog</a></li>
+              <li><a href="#" class="bcf-nav-item">Central de Ajuda</a></li>
+              <li><a href="https://bestcontent.ai/pt/changelog" class="bcf-nav-item">Atualizações</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="bcf-bottom-bar">
+        <div class="bcf-legal-block">
+          <span class="bcf-copyright">© <span id="bcf-year">2025</span> · BestContent AI · Todos os direitos reservados</span>
+          <span class="bcf-cnpj">BESTCONTENT AI BRASIL LTDA · 49.908.998/0001-16</span>
+        </div>
+        <div class="bcf-utility-wrap">
+          <div class="bcf-legal-links">
+            <a href="https://bestcontent.ai/politica-de-privacidade" class="bcf-legal-link">Política de Privacidade</a>
+            <a href="https://bestcontent.ai/termos-de-uso" class="bcf-legal-link">Termos de Uso</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* PARTICLES */
+(function(){
+  const canvas = document.getElementById('bc-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; init(); }
+  function init(){
+    particles=[];
+    for(let i=0;i<55;i++) particles.push({
+      x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+      vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+      size:Math.random()*1.8, color:`rgba(139,92,246,${Math.random()*.55})`
+    });
+  }
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0;
+      if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0;
+      ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
+    });
+    requestAnimationFrame(animate);
+  }
+  window.addEventListener('resize',resize); resize(); animate();
+})();
+
+/* FAQ TOGGLE */
+function toggleFaq(el){
+  const item=el.closest('.faq-item');
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+
+/* TABS */
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    filter(tab.dataset.filter, document.getElementById('searchInput').value);
+  });
+});
+
+/* SEARCH */
+document.getElementById('searchInput').addEventListener('input',function(){
+  filter(document.querySelector('.tab.active').dataset.filter, this.value);
+});
+
+function filter(cat, q){
+  q=q.toLowerCase().trim();
+  let any=false;
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const mc=cat==='all'||item.dataset.category===cat;
+    const mq=!q||item.querySelector('.faq-title').textContent.toLowerCase().includes(q)||(item.dataset.keywords||'').includes(q);
+    if(mc&&mq){item.style.display='';any=true;}
+    else{item.style.display='none';item.classList.remove('open');}
+  });
+  document.getElementById('noResults').style.display=any?'none':'block';
+}
+
+/* FOOTER YEAR */
+document.getElementById('bcf-year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
